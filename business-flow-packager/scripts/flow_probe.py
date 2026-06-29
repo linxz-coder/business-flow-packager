@@ -82,7 +82,7 @@ def classify(path: Path) -> str | None:
 def should_skip_dir(path: Path) -> bool:
     if path.name in SKIP_DIRS:
         return True
-    if path.name.startswith(".") and path.name not in {".github"}:
+    if path.name.startswith("."):
         return True
     return False
 
@@ -166,7 +166,7 @@ def build_signals(by_kind: dict[str, int], hits: list[FileHit], risk_flags: list
     if by_kind.get("output", 0):
         signals.append("output artifacts found; use them as verification targets")
     if risk_flags:
-        signals.append("possible secrets or credential paths found; review before packaging or pushing")
+        signals.append("possible secrets or credential paths found; review before packaging")
     if not hits:
         signals.append("no candidate files found; ask for a path or concrete workflow evidence")
     return signals

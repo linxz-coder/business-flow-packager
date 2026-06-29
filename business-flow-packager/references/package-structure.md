@@ -1,15 +1,13 @@
-# Shareable Business Flow Package Structure
+# Office Business Flow Package Structure
 
-Use a two-level structure for GitHub sharing:
+Use this structure for office-friendly local handoff packages:
 
 ```text
-repo-root/
+package-root/
 ├── README.md
 ├── .gitignore
 ├── docs/
 │   └── operator-guide.md
-├── examples/
-│   └── README.md
 └── flows/
     └── flow-name/
         ├── README.md
@@ -29,13 +27,13 @@ repo-root/
         └── backup/
 ```
 
-For a single-flow repo, the flow folder may be the repo root, but keep `flow_spec.md` and `run_contract.md` separate.
+For a single-flow package, the flow folder may be the package root, but keep `flow_spec.md` and `run_contract.md` separate.
 
 ## Lifecycle Pattern
 
-Borrow the lifecycle shape from project-based repos:
+Borrow the lifecycle shape from project-based workspaces:
 
-- `sources/`: original or normalized source materials. Do not include private customer files in a public repo.
+- `sources/`: original or normalized source materials. Do not include private customer files in a colleague handoff package unless explicitly approved.
 - `notes/`: analysis, operator notes, and decision records.
 - `scripts/`: runnable automation code.
 - `config/`: example config only; real `.env` and credentials stay local and ignored.
@@ -76,10 +74,10 @@ Borrow the lifecycle shape from project-based repos:
 - Verification checks
 - Rollback or cleanup steps
 
-## Optimization From The Reference Structure
+## Office Handoff
 
-Project/example repos often separate in-progress work from shareable examples. Apply that here:
+Separate private working state from colleague-facing files:
 
 - Keep real customer/business runs under `flows/<name>/` or a private worktree.
-- Move sanitized demo flows to `examples/` only after secrets and private data are removed.
+- Move sanitized samples to `docs/` or `sources/sample/` only after secrets and private data are removed.
 - Keep a locked execution contract (`run_contract.md`) beside the script so future agents do not drift from the verified command.

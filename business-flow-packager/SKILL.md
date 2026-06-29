@@ -1,6 +1,6 @@
 ---
 name: business-flow-packager
-description: Package a business workflow that an AI session has already successfully executed into one-click scripts, script-panel buttons, macOS apps, Windows exe launchers, and GitHub-ready delivery folders. Use when the user asks to turn "刚才/上次/这个 session 跑通的流程", a completed AI-assisted business process, spreadsheet/report/export routine, browser operation, CLI sequence, or "业务流/一键打包/脚本面板/做成脚本/做成 app/exe/分享到 GitHub" request into a reusable automation, or when deciding that a previously executed workflow is not suitable for scripting and explaining why.
+description: Package a business workflow that an AI session has already successfully executed into one-click scripts, script-panel buttons, macOS apps, Windows exe launchers, and office-friendly local delivery folders. Use when the user asks to turn "刚才/上次/这个 session 跑通的流程", a completed AI-assisted office process, spreadsheet/report/export routine, browser operation, CLI sequence, or "业务流/一键打包/脚本面板/做成脚本/做成 app/exe/办公室同事可用" request into a reusable automation, or when deciding that a previously executed workflow is not suitable for scripting and explaining why.
 ---
 
 # Business Flow Packager
@@ -50,10 +50,10 @@ Turn a concrete workflow that has already been run successfully by AI into a dur
    - For macOS, prefer an app wrapper around the verified command when the user asks for app form.
    - For Windows, create a `.exe` launcher/build recipe only when the workflow can run without Mac-only dependencies.
    - Read `references/platform-and-panel.md` before adding launchers or app/exe packaging.
-10. Prepare GitHub sharing:
-   - Include a root `README.md`, a minimal `.gitignore`, example config, and explicit install/run/verify steps.
-   - Keep private exports, secrets, cookies, tokens, browser profiles, `.env`, and customer data out of the repo.
-   - Read `references/github-release.md` before pushing or syncing.
+10. Prepare office delivery:
+   - Include a clear `README.md`, example config, run steps, verification steps, and troubleshooting notes.
+   - Keep private exports, secrets, cookies, tokens, browser profiles, `.env`, and customer data out of handoff packages.
+   - Read `references/local-delivery.md` before creating files for colleagues or another computer.
 
 ## Resource Map
 
@@ -65,7 +65,7 @@ Turn a concrete workflow that has already been run successfully by AI into a dur
 - `references/suitability.md`: decision gate for "script it" vs "do not script it".
 - `references/package-structure.md`: recommended shareable package layout, adapted from project/example lifecycle patterns.
 - `references/platform-and-panel.md`: script panel, macOS app, and Windows exe packaging rules.
-- `references/github-release.md`: GitHub-ready README, safety checks, and sync steps.
+- `references/local-delivery.md`: office handoff package, README, safety checks, and colleague-facing usage notes.
 
 ## Hard Rules
 
@@ -73,6 +73,6 @@ Turn a concrete workflow that has already been run successfully by AI into a dur
 - Do not infer the workflow from static documents alone; require a successful session/run record or run the workflow once first.
 - Do not make the user write a full requirements document; use session evidence plus a compact confirmation gate.
 - Do not hide uncertainty by generating a script that depends on unverified manual behavior.
-- Do not push or package secrets, private exports, tokens, cookies, browser profiles, or customer data.
+- Do not package secrets, private exports, tokens, cookies, browser profiles, or customer data.
 - Do not overwrite user files without a backup or explicit confirmation.
 - Do not call a workflow "done" until the created script/package and its verification evidence exist.

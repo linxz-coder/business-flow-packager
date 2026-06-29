@@ -66,7 +66,7 @@ def scaffold(root: Path, title: str, platform: str, panel: bool, force: bool) ->
 
         ## Configuration
 
-        Copy `config/example.env` to a private local `.env` file if needed. Do not commit real secrets.
+        Copy `config/example.env` to a private local `.env` file if needed. Do not store or share real secrets.
 
         ## Verification
 

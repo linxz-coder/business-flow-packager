@@ -1,13 +1,13 @@
 # Business Flow Packager
 
-将已经跑通的业务操作沉淀为可复用自动化：一键脚本、脚本面板入口、macOS app、Windows exe 方案，或可分享到 GitHub 的交付包。
+将已经跑通的办公业务操作沉淀为可复用自动化：一键脚本、脚本面板入口、macOS app、Windows exe 方案，或团队内部可交付包。
 
 ## 适用场景
 
-- 报表生成、数据导出、Excel 清洗、文件整理、内容发布等重复业务操作。
+- 报表生成、数据导出、Excel 清洗、文件整理、内容发布、固定格式播报等重复办公操作。
 - 已由 AI 在一次 session 中成功执行，需要固化为后续可复用流程。
 - 需要判断流程是否适合脚本化；不适合时输出明确原因。
-- 需要把已验证脚本接入脚本面板、桌面应用入口或分享仓库。
+- 需要把已验证脚本接入脚本面板、桌面应用入口或同事可使用的本地交付包。
 
 ## 使用方式
 
@@ -28,7 +28,7 @@
 ```text
 只生成脚本。
 生成脚本，并准备脚本面板入口。
-整理成可分享到 GitHub 的交付包。
+整理成办公室同事可使用的交付包。
 仅面向 macOS，不需要 Windows exe。
 ```
 
@@ -38,7 +38,7 @@
 
 当存在必须确认的决策时，会打开本地 HTML 确认页。常见确认项包括：
 
-- 交付形式：脚本、脚本面板入口、macOS app、Windows exe、GitHub 包。
+- 交付形式：脚本、脚本面板入口、macOS app、Windows exe、办公交付包。
 - 是否保留人工确认点。
 - 哪些脚本入口可以加入脚本面板。
 - 是否排除或替换敏感示例数据。
@@ -72,7 +72,7 @@ flow_package/
 - `scripts/`：可运行脚本。
 - `tests/`：smoke test 或 dry-run 验证。
 - `confirm_ui/`：确认页输入和确认结果。
-- `release/`：app/exe/迁移包等发布产物。
+- `release/`：app/exe/压缩包等内部交付产物。
 
 ## 安装
 
@@ -110,7 +110,7 @@ python3 business-flow-packager/scripts/flow_probe.py --paths ~/some-workflow --o
 
 ## 安全边界
 
-- 不提交真实 `.env`、token、cookie、浏览器 profile、客户数据或私有导出。
+- 不打包或转交真实 `.env`、token、cookie、浏览器 profile、客户数据或私有导出。
 - 不从静态文档目录反推业务流；以已成功执行的 session 为准。
 - 不在脚本验证前加入脚本面板。
 - 不承诺跨平台打包，除非流程不存在系统专属依赖。

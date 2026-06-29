@@ -19,7 +19,7 @@ Use one bundled confirmation gate, not many chat questions.
 
 Use it for decisions such as:
 
-- Delivery form: script only, script panel candidate, macOS app, Windows exe, GitHub package.
+- Delivery form: script only, script panel candidate, macOS app, Windows exe, office handoff package.
 - Whether to add a manual checkpoint for risky production actions.
 - Which candidate commands should become launcher entries.
 - Platform scope when the session used Mac-only tools.
@@ -48,10 +48,11 @@ Write this before launching:
       "label": "交付形式",
       "description": "默认选择最适合当前 session 的形式。",
       "type": "multi_choice",
-      "default": ["script", "github"],
+      "default": ["script", "handoff"],
       "options": [
         {"value": "script", "label": "一键脚本", "description": "生成可重复运行的脚本。"},
-        {"value": "panel", "label": "脚本面板候选", "description": "生成候选按钮，用户确认后再加入面板。"}
+        {"value": "panel", "label": "脚本面板候选", "description": "生成候选按钮，用户确认后再加入面板。"},
+        {"value": "handoff", "label": "办公交付包", "description": "整理给同事使用的说明、配置样例和验证步骤。"}
       ]
     }
   ]
