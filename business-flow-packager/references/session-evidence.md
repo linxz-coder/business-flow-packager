@@ -16,6 +16,7 @@ The successful session is the source of truth. Extract:
 - Errors encountered and the recovery path that finally worked.
 
 Do not treat a directory listing, SOP document, README, or loose notes as the workflow. Those are supporting evidence only.
+Do not ask the user to rewrite this information if it is already visible in the session.
 
 ## If The Session Is Current
 
@@ -49,6 +50,7 @@ Turn the evidence into:
 
 - `flow_spec.md`: what the workflow is for and what the operator cares about.
 - `run_contract.md`: the exact reusable command, inputs, outputs, locks, logs, dry-run behavior, and verification.
+- `confirm_ui/recommendations.json`: only when unresolved packaging decisions remain.
 - Script code: the smallest wrapper or automation that reproduces the successful path.
 - Tests or smoke checks that prove the wrapper still follows the session's verified path.
 

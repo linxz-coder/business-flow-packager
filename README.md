@@ -2,9 +2,9 @@
 
 把 AI 已经跑通的一次业务操作，沉淀成可验证的一键脚本、脚本面板按钮、macOS app、Windows exe 方案，并整理成可分享到 GitHub 的结构。
 
-> **运作方式**：Business Flow Packager 是一套在 AI IDE / Codex 里运行的工作流（一个 skill）。它不是让 AI 只靠扫描某个文档目录去猜业务流程，而是把“AI 刚刚或之前已经帮你跑通的一次具体 session”整理成可复用工作流。AI 会从那次 session 里提取实际执行过的命令、修改过的文件、人工确认点、输出结果和验证证据；适合脚本化就打包，不适合就明确告诉你原因。
+> **运作方式**：Business Flow Packager 是一套在 AI IDE / Codex 里运行的工作流（一个 skill）。它不是让 AI 只靠扫描某个文档目录去猜业务流程，也不是让用户重新写一份需求文档，而是把“AI 刚刚或之前已经帮你跑通的一次具体 session”整理成可复用工作流。AI 会从那次 session 里提取实际执行过的命令、修改过的文件、人工确认点、输出结果和验证证据；适合脚本化就打包，不适合就明确告诉你原因。
 >
-> **你要做的**：在某个业务流程被 AI 跑通后，对同一个 AI 说“把刚才这个流程打包成 skill/工作流”；或者把那次 session 的 thread、记录、命令、产物目录或关键输出给 AI，并说明你希望最后变成脚本、脚本面板按钮、macOS app、Windows exe，还是 GitHub 分享包。
+> **你要做的**：在某个业务流程被 AI 跑通后，只需要说“把刚才这个流程打包成工作流”。如果有少数必须由你确认的决策，AI 会像 PPT Master 一样打开一个本地 HTML 确认页，你只需要点选确认。
 
 ## 适合什么场景
 
@@ -34,12 +34,10 @@ ln -s /path/to/business-flow-packager/business-flow-packager ~/.codex/skills/bus
 最有效的用法是在 AI 刚刚完成一次业务操作后，直接接着说：
 
 ```text
-用 $business-flow-packager 把刚才这个已经跑通的流程打包成可复用工作流。
-先从本 session 里提取实际步骤、命令、文件、输出和验证证据；
-适合脚本化就做成一键脚本，脚本验证后再告诉我哪些入口适合放进脚本面板。
+用 $business-flow-packager 打包刚才这个流程。
 ```
 
-或者更短：
+或者自然说：
 
 ```text
 把刚才你帮我跑通的流程打包成工作流，能做脚本就做脚本，不能就说明原因。
@@ -73,10 +71,11 @@ ln -s /path/to/business-flow-packager/business-flow-packager ~/.codex/skills/bus
 2. 提取真实步骤：命令、脚本、文件输入输出、人工确认、验证证据。
 3. 再检查 session 里涉及的文件和目录，用于补齐依赖，而不是从目录猜流程。
 4. 判断流程是否适合脚本化。
-5. 适合就写 `flow_spec.md` 和 `run_contract.md`，再做脚本。
-6. 跑语法检查、dry-run 或低风险验证。
-7. 把候选入口列出来，让你确认哪些放进脚本面板。
-8. 按需要整理 macOS app、Windows exe 或 GitHub 分享包。
+5. 自动生成默认打包方案。
+6. 如果有必须确认的点，打开本地 HTML 页面让你一次性确认。
+7. 适合就写 `flow_spec.md` 和 `run_contract.md`，再做脚本。
+8. 跑语法检查、dry-run 或低风险验证。
+9. 按确认结果整理脚本面板候选、macOS app、Windows exe 或 GitHub 分享包。
 
 ### 4. 你可以这样指定交付结果
 
@@ -105,12 +104,14 @@ business-flow-packager/
     ├── SKILL.md
     ├── agents/openai.yaml
     ├── references/
+    │   ├── confirmation-ui.md
     │   ├── session-evidence.md
     │   ├── suitability.md
     │   ├── package-structure.md
     │   ├── platform-and-panel.md
     │   └── github-release.md
     └── scripts/
+        ├── confirm_ui.py
         ├── flow_probe.py
         └── make_flow_package.py
 ```
@@ -129,11 +130,18 @@ python3 business-flow-packager/scripts/flow_probe.py --paths ~/some-workflow --o
 python3 business-flow-packager/scripts/make_flow_package.py --root ./flows/monthly-report --title "Monthly Report" --platform mac --panel
 ```
 
+打开本地确认页：
+
+```bash
+python3 business-flow-packager/scripts/confirm_ui.py ./flows/monthly-report
+```
+
 ## 设计取舍
 
 - Skill 本体不放冗长说明，详细判断标准放在 `references/`，按需读取。
 - 借鉴项目型仓库的结构：`sources/`、`scripts/`、`exports/`、`notes/`、`backup/` 分开。
 - 增加 `flow_spec.md` 和 `run_contract.md`，把业务目标和可执行契约拆开，避免后续维护时跑偏。
+- 默认不要求用户写长需求；AI 从成功 session 里提取默认方案，只把少数需要拍板的点放到 HTML 确认页。
 - 默认不把脚本直接塞进面板；脚本验证后先列出候选入口，再让用户确认。
 
 ## 安全边界

@@ -29,6 +29,7 @@ def scaffold(root: Path, title: str, platform: str, panel: bool, force: bool) ->
         "config",
         "docs",
         "tests",
+        "confirm_ui",
         "exports",
         "logs",
         "notes",
@@ -55,6 +56,12 @@ def scaffold(root: Path, title: str, platform: str, panel: bool, force: bool) ->
         ```bash
         python3 scripts/run.py --help
         python3 scripts/run.py --dry-run
+        ```
+
+        If the AI generated a confirmation page:
+
+        ```bash
+        python3 <skill-path>/scripts/confirm_ui.py .
         ```
 
         ## Configuration
@@ -226,6 +233,7 @@ if __name__ == "__main__":
         *.log
         logs/*
         !logs/.gitkeep
+        confirm_ui/result.json
         exports/*
         !exports/.gitkeep
         backup/*

@@ -20,6 +20,7 @@ repo-root/
         ├── config/
         │   └── example.env
         ├── tests/
+        ├── confirm_ui/
         ├── exports/
         ├── logs/
         ├── notes/
@@ -38,6 +39,7 @@ Borrow the lifecycle shape from project-based repos:
 - `notes/`: analysis, operator notes, and decision records.
 - `scripts/`: runnable automation code.
 - `config/`: example config only; real `.env` and credentials stay local and ignored.
+- `confirm_ui/`: optional `recommendations.json` and `result.json` for bundled user confirmation.
 - `exports/`: generated outputs. Usually ignored unless they are safe examples.
 - `logs/`: runtime logs. Ignore by default.
 - `backup/`: rollback snapshots. Ignore by default.
@@ -63,6 +65,7 @@ Borrow the lifecycle shape from project-based repos:
 `run_contract.md` is the execution contract:
 
 - Session evidence anchor
+- Confirmation result path, if a browser confirmation was used
 - Command and cwd
 - Runtime dependencies
 - Required env vars or config files
