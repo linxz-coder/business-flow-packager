@@ -1,130 +1,96 @@
-# Business Flow Packager Skill
+# Business Flow Packager
 
-把 AI 已经跑通的一次业务操作，沉淀成可验证的一键脚本、脚本面板按钮、macOS app、Windows exe 方案，并整理成可分享到 GitHub 的结构。
+将已经跑通的业务操作沉淀为可复用自动化：一键脚本、脚本面板入口、macOS app、Windows exe 方案，或可分享到 GitHub 的交付包。
 
-> **运作方式**：Business Flow Packager 是一套在 AI IDE / Codex 里运行的工作流（一个 skill）。它不是让 AI 只靠扫描某个文档目录去猜业务流程，也不是让用户重新写一份需求文档，而是把“AI 刚刚或之前已经帮你跑通的一次具体 session”整理成可复用工作流。AI 会从那次 session 里提取实际执行过的命令、修改过的文件、人工确认点、输出结果和验证证据；适合脚本化就打包，不适合就明确告诉你原因。
->
-> **你要做的**：在某个业务流程被 AI 跑通后，只需要说“把刚才这个流程打包成工作流”。如果有少数必须由你确认的决策，AI 会像 PPT Master 一样打开一个本地 HTML 确认页，你只需要点选确认。
+## 适用场景
 
-## 适合什么场景
+- 报表生成、数据导出、Excel 清洗、文件整理、内容发布等重复业务操作。
+- 已由 AI 在一次 session 中成功执行，需要固化为后续可复用流程。
+- 需要判断流程是否适合脚本化；不适合时输出明确原因。
+- 需要把已验证脚本接入脚本面板、桌面应用入口或分享仓库。
 
-- 把 AI 已经跑通的报表、导出、整理、发布流程做成脚本。
-- 判断一个业务流程是否适合自动化，不适合时给出明确原因。
-- 脚本做好后，确认哪些入口要放到本机脚本面板。
-- 需要同时考虑 macOS app、Windows exe、GitHub README 和可复用交付目录。
+## 使用方式
 
-## 安装到 Codex
+在业务流程跑通后，输入一句即可：
 
-本仓库的 skill 本体在：
+```text
+用 $business-flow-packager 打包当前已完成的流程。
+```
+
+打包历史 session：
+
+```text
+用 $business-flow-packager 打包这个已跑通的 session：<thread/session 链接或标题>
+```
+
+可选补充目标：
+
+```text
+只生成脚本。
+生成脚本，并准备脚本面板入口。
+整理成可分享到 GitHub 的交付包。
+仅面向 macOS，不需要 Windows exe。
+```
+
+## 用户确认
+
+用户不需要重新编写需求文档。系统会从成功 session 中提取命令、文件变更、输出结果和验证证据。
+
+当存在必须确认的决策时，会打开本地 HTML 确认页。常见确认项包括：
+
+- 交付形式：脚本、脚本面板入口、macOS app、Windows exe、GitHub 包。
+- 是否保留人工确认点。
+- 哪些脚本入口可以加入脚本面板。
+- 是否排除或替换敏感示例数据。
+
+确认后，结果写入：
+
+```text
+<flow_package>/confirm_ui/result.json
+```
+
+## 交付物
+
+典型输出包括：
+
+```text
+flow_package/
+├── README.md
+├── flow_spec.md
+├── run_contract.md
+├── scripts/
+├── config/
+├── tests/
+├── confirm_ui/
+├── docs/
+├── exports/
+└── release/
+```
+
+- `flow_spec.md`：业务目标、输入输出、人工假设和数据边界。
+- `run_contract.md`：执行命令、工作目录、依赖、日志、幂等性和验证方式。
+- `scripts/`：可运行脚本。
+- `tests/`：smoke test 或 dry-run 验证。
+- `confirm_ui/`：确认页输入和确认结果。
+- `release/`：app/exe/迁移包等发布产物。
+
+## 安装
+
+skill 本体目录：
 
 ```text
 business-flow-packager/
 ```
 
-本机安装推荐软链接：
+安装到 Codex：
 
 ```bash
 ln -s /path/to/business-flow-packager/business-flow-packager ~/.codex/skills/business-flow-packager
 ```
 
-## 怎么让 AI 使用这个 Skill
+## 工具命令
 
-### 1. 在流程跑通后，让 AI 立刻打包
-
-最有效的用法是在 AI 刚刚完成一次业务操作后，直接接着说：
-
-```text
-用 $business-flow-packager 打包刚才这个流程。
-```
-
-或者自然说：
-
-```text
-把刚才你帮我跑通的流程打包成工作流，能做脚本就做脚本，不能就说明原因。
-```
-
-### 2. 打包一个过去的 session
-
-如果要打包的是之前某次对话或执行记录，把 session 线索给 AI：
-
-```text
-用 $business-flow-packager 打包这个 session 里已经跑通的流程：<thread/session 链接或标题>。
-请先读取那次 session 的关键命令、文件变更、输出结果和验证方式，再整理成 GitHub 可分享的工作流。
-```
-
-也可以给更具体的上下文：
-
-```text
-上次 AI 已经帮我完成了“浏览器导出 + Excel 清洗 + 群里播报”。
-请用 $business-flow-packager 根据那次执行记录打包，不要只扫描文档目录来猜流程。
-```
-
-如果 AI 没有自动进入这个流程，直接点名：
-
-```text
-先读 business-flow-packager/SKILL.md，然后按这个 skill 的流程执行。
-```
-
-### 3. AI 会按这个顺序处理
-
-1. 先读取当前或指定 session 的实际执行记录。
-2. 提取真实步骤：命令、脚本、文件输入输出、人工确认、验证证据。
-3. 再检查 session 里涉及的文件和目录，用于补齐依赖，而不是从目录猜流程。
-4. 判断流程是否适合脚本化。
-5. 自动生成默认打包方案。
-6. 如果有必须确认的点，打开本地 HTML 页面让你一次性确认。
-7. 适合就写 `flow_spec.md` 和 `run_contract.md`，再做脚本。
-8. 跑语法检查、dry-run 或低风险验证。
-9. 按确认结果整理脚本面板候选、macOS app、Windows exe 或 GitHub 分享包。
-
-### 4. 你可以这样指定交付结果
-
-```text
-只做脚本，暂时不要放进脚本面板。
-```
-
-```text
-脚本验证通过后，帮我准备放进脚本面板的候选按钮配置。
-```
-
-```text
-这个要给别人用，做成 GitHub repo 结构，README 写清楚安装、配置、运行和验证。
-```
-
-```text
-这个只在 Mac 上用，做成脚本 + macOS app 入口；不要承诺 Windows exe。
-```
-
-## 目录结构
-
-```text
-business-flow-packager/
-├── README.md
-└── business-flow-packager/
-    ├── SKILL.md
-    ├── agents/openai.yaml
-    ├── references/
-    │   ├── confirmation-ui.md
-    │   ├── session-evidence.md
-    │   ├── suitability.md
-    │   ├── package-structure.md
-    │   ├── platform-and-panel.md
-    │   └── github-release.md
-    └── scripts/
-        ├── confirm_ui.py
-        ├── flow_probe.py
-        └── make_flow_package.py
-```
-
-## 内置工具
-
-只读盘点 session 证据里已经指向的候选目录：
-
-```bash
-python3 business-flow-packager/scripts/flow_probe.py --paths ~/some-workflow --output /tmp/flow_probe.json --markdown /tmp/flow_probe.md
-```
-
-创建一个业务流打包目录：
+创建业务流交付包：
 
 ```bash
 python3 business-flow-packager/scripts/make_flow_package.py --root ./flows/monthly-report --title "Monthly Report" --platform mac --panel
@@ -136,14 +102,15 @@ python3 business-flow-packager/scripts/make_flow_package.py --root ./flows/month
 python3 business-flow-packager/scripts/confirm_ui.py ./flows/monthly-report
 ```
 
-## 设计取舍
+盘点已由 session 指向的目录：
 
-- Skill 本体不放冗长说明，详细判断标准放在 `references/`，按需读取。
-- 借鉴项目型仓库的结构：`sources/`、`scripts/`、`exports/`、`notes/`、`backup/` 分开。
-- 增加 `flow_spec.md` 和 `run_contract.md`，把业务目标和可执行契约拆开，避免后续维护时跑偏。
-- 默认不要求用户写长需求；AI 从成功 session 里提取默认方案，只把少数需要拍板的点放到 HTML 确认页。
-- 默认不把脚本直接塞进面板；脚本验证后先列出候选入口，再让用户确认。
+```bash
+python3 business-flow-packager/scripts/flow_probe.py --paths ~/some-workflow --output /tmp/flow_probe.json --markdown /tmp/flow_probe.md
+```
 
 ## 安全边界
 
-不要把真实 `.env`、token、cookie、浏览器 profile、客户数据、私有导出文件提交到 GitHub。发布前按 `business-flow-packager/references/github-release.md` 做检查。
+- 不提交真实 `.env`、token、cookie、浏览器 profile、客户数据或私有导出。
+- 不从静态文档目录反推业务流；以已成功执行的 session 为准。
+- 不在脚本验证前加入脚本面板。
+- 不承诺跨平台打包，除非流程不存在系统专属依赖。

@@ -4,7 +4,7 @@ Use the browser confirmation page when the workflow can be inferred from session
 
 ## Principle
 
-Follow the same pattern as PPT Master's confirmation page:
+Use the same confirmation-page pattern throughout the package:
 
 - Chat remains the fallback.
 - The AI writes `confirm_ui/recommendations.json`.
