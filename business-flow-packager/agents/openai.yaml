@@ -1,4 +1,4 @@
 interface:
   display_name: "Business Flow Packager"
   short_description: "Package repeatable business workflows into scripts"
-  default_prompt: "Use $business-flow-packager to inspect a business workflow, decide whether it should be scripted, and package a validated one-click automation."
+  default_prompt: "Use $business-flow-packager to package the workflow from a successful AI session into a validated one-click automation."

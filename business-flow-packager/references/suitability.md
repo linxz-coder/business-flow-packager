@@ -4,6 +4,7 @@ Use this reference before writing code when the workflow touches external system
 
 ## Script It When
 
+- The workflow has already been run successfully in the current or a previous AI session.
 - The workflow is repeated or likely to be reused.
 - Inputs can be listed as files, dates, URLs, IDs, env vars, or operator prompts.
 - Outputs can be verified as files, database rows, API responses, dashboard state, sent messages, or logs.
@@ -21,7 +22,7 @@ Use this reference before writing code when the workflow touches external system
 - It would expose secrets, private customer files, cookies, browser profiles, or regulated data in a shareable package.
 - It changes production systems and there is no dry-run, sandbox, backup, or rollback path.
 - It depends on Mac-only apps but the requested target is Windows exe, or vice versa, and no portable fallback exists.
-- The only evidence is a vague verbal process and no local files, logs, exports, or command history can be found.
+- The only evidence is a vague verbal process or static document folder, and no successful session/run record, command history, local files, logs, or exports can be found.
 
 ## Response For Unsuitable Workflows
 

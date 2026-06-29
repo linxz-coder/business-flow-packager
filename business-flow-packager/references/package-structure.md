@@ -47,6 +47,7 @@ Borrow the lifecycle shape from project-based repos:
 
 `flow_spec.md` is human-readable:
 
+- Session evidence: source thread/session, successful run summary, files touched, outputs verified, and known gaps
 - Purpose
 - Operator
 - Trigger condition
@@ -61,6 +62,7 @@ Borrow the lifecycle shape from project-based repos:
 
 `run_contract.md` is the execution contract:
 
+- Session evidence anchor
 - Command and cwd
 - Runtime dependencies
 - Required env vars or config files

@@ -77,6 +77,18 @@ def scaffold(root: Path, title: str, platform: str, panel: bool, force: bool) ->
         f"""
         # Flow Spec: {title}
 
+        ## Session Evidence
+
+        - Source session/thread:
+        - Successful run summary:
+        - Commands actually run:
+        - Files touched:
+        - Outputs verified:
+        - Manual decisions:
+        - Known gaps:
+
+        ## Workflow
+
         - Purpose:
         - Operator:
         - Trigger:
@@ -93,6 +105,10 @@ def scaffold(root: Path, title: str, platform: str, panel: bool, force: bool) ->
         root / "run_contract.md",
         """
         # Run Contract
+
+        ## Session Evidence
+
+        TODO: Link or summarize the successful AI session this contract is based on.
 
         ## Command
 
